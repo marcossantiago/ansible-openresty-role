@@ -4,7 +4,7 @@
 
 - name: Enable OpenResty repo
   template:
-    src: openresty.repo.fedora.j2
+    src: etc/yum.repos.d/openresty.repo.fedora.j2
     dest: /etc/yum.repos.d/openresty.repo
     owner: root
     group: root
