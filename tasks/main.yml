@@ -27,3 +27,7 @@
 # Configuration tasks
 - include: configure.yml
   tags: openresty_configure
+
+# vHosts tasks
+- include: vhosts.yml
+  tags: openresty_vhosts
