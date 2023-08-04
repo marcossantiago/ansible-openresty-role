@@ -1,0 +1,33 @@
+location /nginx_status {
+    stub_status;
+    access_log off;
+    allow 127.0.0.1;
+    deny all;
+}
+
+location = /favicon.ico {
+    try_files $uri =404;
+    access_log off;
+    log_not_found off;
+}
+
+location = /robots.txt {
+    try_files $uri $uri/;
+    allow all;
+    access_log off;
+    log_not_found off;
+}
+
+# Deny all attempts to access hidden files such as .htaccess, .htpasswd, .DS_Store (Mac).
+# Keep logging the requests to parse later (or to pass to firewall utilities such as fail2ban)
+location ~ /\. {
+    deny all;
+}
+
+location ~* \.(?:jpe?g|jpeg|gif|png|ico|cur|svg|svgz|mp4|ogg|ogv|webm|htc|css|js|woff2)(\?[0-9]+)?$ {
+    expires 1y;
+    add_header Pragma public;
+    add_header Cache-Control "public";
+    access_log off;
+    log_not_found off;
+}

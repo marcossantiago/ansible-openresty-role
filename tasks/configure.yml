@@ -22,6 +22,11 @@
     mode: 0644
   when: ansible_service_mgr == 'systemd'
 
+- name: create standard nginx log directory
+  file:
+    state: directory
+    path: "/var/log/nginx/"
+
 - name: create standard nginx directories
   file:
     state: directory
@@ -31,7 +36,20 @@
     - sites-enabled
     - sites-available
 
-- name: create standard nginx log directory
-  file:
-    state: directory
-    path: "/var/log/nginx/"
+- name: install default nginx configuration
+  template:
+    src: "etc/nginx/{{ item }}.j2"
+    dest: "{{ nginx_conf_path }}/{{ item }}"
+  with_items:
+    - nginx.conf
+    - locations.conf
+    - caching.conf
+    - conf.d/logging.conf
+    - conf.d/cache.conf
+    - conf.d/defaults.conf
+    - conf.d/gzip.conf
+    - conf.d/prometheus.conf
+    - conf.d/ratelimit.conf
+  notify: restart nginx
+
+

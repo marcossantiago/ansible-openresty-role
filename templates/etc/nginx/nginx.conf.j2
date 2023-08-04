@@ -1,10 +1,14 @@
-worker_processes auto;
+user {{ openresty_user }} {{ openresty_group }};
+
+worker_rlimit_nofile 16384;
+worker_processes 8;
+worker_cpu_affinity auto;
 
 events {
-    worker_connections {{ openresty_worker_connections }};
+    worker_connections  {{ openresty_worker_connections }};
 }
 
 http {
-    include /etc/nginx/conf.d/*;
-    include /etc/nginx/sites-enabled/*;
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
 }

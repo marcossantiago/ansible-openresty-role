@@ -1,0 +1,16 @@
+#
+# Default (all pages) by IP - rate limit
+#
+geo $limited {
+    default 1;
+    # CIDR in the list below are not limited
+    127.0.0.1/32 0;
+}
+
+map $limited $limit {
+    1 $binary_remote_addr;
+    0 "";
+}
+
+limit_req_status 429;
+limit_req_zone $limited zone=default:10m rate=90r/s; # 90 requests per second from any IP
