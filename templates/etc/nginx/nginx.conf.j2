@@ -10,5 +10,5 @@ events {
 
 http {
     include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/sites-enabled/*.conf;
+    include {{ nginx_vhost_path }}/*;
 }
