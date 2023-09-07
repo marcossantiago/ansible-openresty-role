@@ -13,4 +13,4 @@ map $limited $limit {
 }
 
 limit_req_status 429;
-limit_req_zone $limited zone=default:10m rate=90r/s; # 90 requests per second from any IP
+limit_req_zone $limited zone=default:10m rate={{ nginx_default_rate_limit }};
